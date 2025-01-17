@@ -1,0 +1,18 @@
+<div class="container mt-4">
+  <h1>Notes</h1>
+  <div *ngFor="let note of notes" class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ note.title }}</h5>
+      <p class="card-text">{{ note.content }}</p>
+      <button
+        class="btn btn-primary btn-sm me-2"
+        (click)="archiveNote(note.id!)"
+      >
+        {{ note.archived ? "Unarchive" : "Archive" }}
+      </button>
+      <button class="btn btn-danger btn-sm" (click)="deleteNote(note.id!)">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
