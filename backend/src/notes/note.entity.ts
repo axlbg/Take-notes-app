@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Category } from 'src/category/category.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Note {
@@ -13,4 +14,7 @@ export class Note {
 
   @Column({ default: false })
   isArchived: boolean;
+
+  @ManyToOne(() => Category, (category) => category.notes, { nullable: true })
+  category: Category;
 }

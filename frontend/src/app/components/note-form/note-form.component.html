@@ -1,26 +1,27 @@
-<div class="container mt-4">
-  <h1>Create Note</h1>
+<div>
+  <h2>Create/Edit Note</h2>
   <form (ngSubmit)="saveNote()">
-    <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
-      <input
-        id="title"
-        class="form-control"
-        [(ngModel)]="note.title"
-        name="title"
-        required
-      />
+    <div>
+      <label for="title">Title:</label>
+      <input id="title" [(ngModel)]="note.title" name="title" required />
     </div>
-    <div class="mb-3">
-      <label for="content" class="form-label">Content</label>
+    <div>
+      <label for="content">Content:</label>
       <textarea
         id="content"
-        class="form-control"
         [(ngModel)]="note.content"
         name="content"
         required
       ></textarea>
     </div>
-    <button type="submit" class="btn btn-success">Save</button>
+    <div>
+      <label for="category">Category:</label>
+      <select id="category" [(ngModel)]="note.category" name="category">
+        <option *ngFor="let category of categories" [ngValue]="category">
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
+    <button type="submit">Save</button>
   </form>
 </div>

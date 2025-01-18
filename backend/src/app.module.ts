@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { NotesModule } from './notes/notes.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { NotesModule } from './notes/notes.module';
       synchronize: true, // Solo para desarrollo; crea tablas automáticamente
     }),
     NotesModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,6 +8,7 @@ export interface Note {
   title: string;
   content: string;
   archived: boolean;
+  category?: number[];
 }
 
 @Injectable({
@@ -17,20 +18,23 @@ export class NoteService {
   private apiUrl = `${environment.apiUrl}/notes`;
 
   constructor(private http: HttpClient) {}
-
-  getNotes(): Observable<Note[]> {
+  getActiveNotes(): Observable<Note[]> {
     return this.http.get<Note[]>(`${this.apiUrl}/active`);
+  }
+
+  getArchivedNotes(): Observable<Note[]> {
+    return this.http.get<Note[]>(`${this.apiUrl}/archived`);
   }
 
   getNoteById(id: number): Observable<Note> {
     return this.http.get<Note>(`${this.apiUrl}/${id}`);
   }
 
-  createNote(note: Note): Observable<Note> {
+  createNote(note: Partial<Note>): Observable<Note> {
     return this.http.post<Note>(this.apiUrl, note);
   }
 
-  updateNote(id: number, note: Note): Observable<Note> {
+  updateNote(id: number, note: Partial<Note>): Observable<Note> {
     return this.http.put<Note>(`${this.apiUrl}/${id}`, note);
   }
 
@@ -40,5 +44,17 @@ export class NoteService {
 
   archiveNote(id: number): Observable<Note> {
     return this.http.patch<Note>(`${this.apiUrl}/${id}/archive`, {});
+  }
+
+  // Asignar categorías a una nota
+  addCategoriesToNote(noteId: number, categoryIds: number[]): Observable<Note> {
+    return this.http.put<Note>(`${this.apiUrl}/${noteId}/categories`, {
+      categories: categoryIds,
+    });
+  }
+
+  // Filtrar notas por categoría
+  getNotesByCategory(categoryId: number): Observable<Note[]> {
+    return this.http.get<Note[]>(`${this.apiUrl}/category/${categoryId}`);
   }
 }

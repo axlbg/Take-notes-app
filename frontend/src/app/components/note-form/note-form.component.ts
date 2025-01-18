@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NoteService, Note } from '../../services/note.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Category, CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-note-form',
@@ -12,13 +12,37 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './note-form.component.css',
 })
 export class NoteFormComponent {
-  note: Note = { title: '', content: '', archived: false };
+  note: Note = { title: '', content: '', archived: false, category: [] };
 
-  constructor(private noteService: NoteService, private router: Router) {}
+  categories: Category[] = [];
+
+  constructor(
+    private noteService: NoteService,
+    private categoryService: CategoryService
+  ) {
+    this.categoryService.getCategories().subscribe((data) => {
+      this.categories = data;
+    });
+  }
 
   saveNote(): void {
-    this.noteService.createNote(this.note).subscribe(() => {
-      this.router.navigate(['/']); // Redirige a la lista de notas
-    });
+    if (this.note.id) {
+      this.noteService.updateNote(this.note.id, this.note).subscribe(() => {
+        this.resetForm();
+      });
+    } else {
+      this.noteService.createNote(this.note).subscribe(() => {
+        this.resetForm();
+      });
+    }
+  }
+
+  resetForm(): void {
+    this.note = {
+      title: '',
+      content: '',
+      archived: false,
+      category: [],
+    };
   }
 }

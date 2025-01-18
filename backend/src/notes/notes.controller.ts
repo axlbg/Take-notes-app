@@ -6,6 +6,7 @@ import {
   Delete,
   Param,
   Body,
+  Patch,
 } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { Note } from './note.entity';
@@ -25,16 +26,13 @@ export class NotesController {
   }
 
   @Post()
-  create(@Body() note: Partial<Note>): Promise<Note> {
+  create(@Body() note: Note): Promise<Note> {
     return this.notesService.create(note);
   }
 
   @Put(':id')
-  update(
-    @Param('id') id: number,
-    @Body() updatedNote: Partial<Note>,
-  ): Promise<Note> {
-    return this.notesService.update(id, updatedNote);
+  update(@Param('id') id: number, @Body() note: Note): Promise<Note> {
+    return this.notesService.update(id, note);
   }
 
   @Delete(':id')
@@ -42,8 +40,13 @@ export class NotesController {
     return this.notesService.delete(id);
   }
 
-  @Put(':id/archive')
+  @Patch(':id/archive')
   archive(@Param('id') id: number): Promise<Note> {
     return this.notesService.archive(id);
+  }
+
+  @Get('filterByCategory/:categoryId')
+  filterByCategory(@Param('categoryId') categoryId: number): Promise<Note[]> {
+    return this.notesService.filterByCategory(categoryId);
   }
 }

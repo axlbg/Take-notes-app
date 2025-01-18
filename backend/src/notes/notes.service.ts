@@ -18,14 +18,12 @@ export class NotesService {
     return this.notesRepository.find({ where: { isArchived: true } });
   }
 
-  create(note: Partial<Note>): Promise<Note> {
-    const newNote = this.notesRepository.create(note);
-    return this.notesRepository.save(newNote);
+  create(note: Note): Promise<Note> {
+    return this.notesRepository.save(note);
   }
 
-  async update(id: number, updatedNote: Partial<Note>): Promise<Note> {
-    await this.notesRepository.update(id, updatedNote);
-    return this.notesRepository.findOneBy({ id });
+  update(id: number, note: Note): Promise<Note> {
+    return this.notesRepository.save({ ...note, id });
   }
 
   async delete(id: number): Promise<void> {
@@ -34,7 +32,16 @@ export class NotesService {
 
   async archive(id: number): Promise<Note> {
     const note = await this.notesRepository.findOneBy({ id });
+    if (!note) {
+      throw new Error('Note not found');
+    }
     note.isArchived = !note.isArchived;
     return this.notesRepository.save(note);
+  }
+
+  filterByCategory(categoryId: number): Promise<Note[]> {
+    return this.notesRepository.find({
+      where: { category: { id: categoryId } },
+    });
   }
 }
