@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Category } from '../../services/category.service';
+import { Category, CategoryService } from '../../services/category.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -14,8 +14,18 @@ export class CategoryFormComponent {
     name: '',
   };
 
+  constructor(private categoryService: CategoryService) {}
+
   createCategory() {
-    console.log('submite');
+    this.categoryService.createCategory(this.category).subscribe(
+      (response) => {
+        console.log('Category created successfully:', response);
+        this.resetForm();
+      },
+      (error) => {
+        console.error('Error creating category:', error);
+      }
+    );
     this.resetForm();
   }
 
