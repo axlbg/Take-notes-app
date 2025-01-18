@@ -7,7 +7,7 @@ import { Note } from './note.service';
 export interface Category {
   id?: number;
   name: string;
-  notes: Note[];
+  notes?: Note[];
 }
 
 @Injectable({

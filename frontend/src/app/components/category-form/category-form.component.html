@@ -1,0 +1,21 @@
+<div>
+  <form class="note-form" (ngSubmit)="createCategory()">
+    <h4 class="note-title">New Category</h4>
+    <div class="form-group">
+      <label>Name</label>
+      <input
+        id="name"
+        [(ngModel)]="category.name"
+        name="name"
+        required
+        type="text"
+        placeholder="Enter new category name..."
+      />
+    </div>
+
+    <div class="form-row">
+      <span></span>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+  </form>
+</div>
