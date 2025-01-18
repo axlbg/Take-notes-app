@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Category } from './category.service';
 
 export interface Note {
   id?: number;
   title: string;
   content: string;
   isArchived: boolean;
-  category?: number[];
+  category?: Category;
 }
 
 @Injectable({
@@ -16,14 +17,24 @@ export interface Note {
 })
 export class NoteService {
   private apiUrl = `${environment.apiUrl}/notes`;
+  private notesSubject = new BehaviorSubject<Note[]>([]);
 
   constructor(private http: HttpClient) {}
+
+  get notes$(): Observable<Note[]> {
+    return this.notesSubject.asObservable();
+  }
+
   getActiveNotes(): Observable<Note[]> {
-    return this.http.get<Note[]>(`${this.apiUrl}/active`);
+    return this.http.get<Note[]>(`${this.apiUrl}/active`).pipe(
+      tap((notes) => this.notesSubject.next(notes)) // Emitir las notas activas al Subject
+    );
   }
 
   getArchivedNotes(): Observable<Note[]> {
-    return this.http.get<Note[]>(`${this.apiUrl}/archived`);
+    return this.http.get<Note[]>(`${this.apiUrl}/archived`).pipe(
+      tap((notes) => this.notesSubject.next(notes)) // Emitir las notas archivadas al Subject
+    );
   }
 
   getNoteById(id: number): Observable<Note> {
@@ -56,5 +67,10 @@ export class NoteService {
   // Filtrar notas por categoría
   getNotesByCategory(categoryId: number): Observable<Note[]> {
     return this.http.get<Note[]>(`${this.apiUrl}/category/${categoryId}`);
+  }
+
+  refreshNotes(actives: boolean): void {
+    if (actives) this.getActiveNotes().subscribe();
+    else this.getArchivedNotes().subscribe();
   }
 }

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Note, NoteService } from '../../services/note.service';
 import { CommonModule, NgClass } from '@angular/common';
-import { Category, CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-note-list',
@@ -11,18 +10,16 @@ import { Category, CategoryService } from '../../services/category.service';
   styleUrl: './note-list.component.css',
 })
 export class NoteListComponent {
-  notes: Note[] = [];
   @Output() noteSelected = new EventEmitter<Note>();
 
+  notes: Note[] = [];
   archivedSelected: boolean = false;
 
-  constructor(
-    private noteService: NoteService,
-    private categoryService: CategoryService
-  ) {
-    this.noteService.getActiveNotes().subscribe((data) => {
+  constructor(private noteService: NoteService) {
+    this.noteService.notes$.subscribe((data) => {
       this.notes = data;
     });
+    this.fetchNotes();
   }
 
   outNote(note: Note) {

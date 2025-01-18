@@ -15,6 +15,6 @@ export class Note {
   @Column({ default: false })
   isArchived: boolean;
 
-  @ManyToOne(() => Category, (category) => category.notes, { nullable: true })
+  @ManyToOne(() => Category, (category) => category.notes)
   category: Category;
 }

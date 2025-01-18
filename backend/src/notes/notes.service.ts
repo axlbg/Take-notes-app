@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Note } from './note.entity';
+import { Category } from 'src/category/category.entity';
 
 @Injectable()
 export class NotesService {
@@ -11,14 +12,32 @@ export class NotesService {
   ) {}
 
   findAllActive(): Promise<Note[]> {
-    return this.notesRepository.find({ where: { isArchived: false } });
+    return this.notesRepository.find({
+      where: { isArchived: false },
+      relations: ['category'],
+    });
   }
 
   findAllArchived(): Promise<Note[]> {
-    return this.notesRepository.find({ where: { isArchived: true } });
+    return this.notesRepository.find({
+      where: { isArchived: true },
+      relations: ['category'],
+    });
   }
 
-  create(note: Note): Promise<Note> {
+  async create(note: Note): Promise<Note> {
+    if (note.category && note.category.id) {
+      const category = await this.notesRepository.manager.findOne(Category, {
+        where: { id: note.category.id },
+      });
+
+      if (!category) {
+        throw new Error('Category not found');
+      }
+
+      note.category = category;
+    }
+
     return this.notesRepository.save(note);
   }
 
@@ -42,6 +61,7 @@ export class NotesService {
   filterByCategory(categoryId: number): Promise<Note[]> {
     return this.notesRepository.find({
       where: { category: { id: categoryId } },
+      relations: ['category'],
     });
   }
 }

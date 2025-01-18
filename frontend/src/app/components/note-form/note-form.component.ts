@@ -12,7 +12,12 @@ import { Category, CategoryService } from '../../services/category.service';
   styleUrl: './note-form.component.css',
 })
 export class NoteFormComponent {
-  note: Note = { title: '', content: '', isArchived: false, category: [] };
+  note: Note = {
+    title: '',
+    content: '',
+    isArchived: false,
+    category: undefined,
+  };
 
   categories: Category[] = [];
 
@@ -22,19 +27,15 @@ export class NoteFormComponent {
   ) {
     this.categoryService.getCategories().subscribe((data) => {
       this.categories = data;
+      this.resetForm();
     });
   }
 
   saveNote(): void {
-    if (this.note.id) {
-      this.noteService.updateNote(this.note.id, this.note).subscribe(() => {
-        this.resetForm();
-      });
-    } else {
-      this.noteService.createNote(this.note).subscribe(() => {
-        this.resetForm();
-      });
-    }
+    this.noteService.createNote(this.note).subscribe(() => {
+      console.log(this.note);
+      this.resetForm();
+    });
   }
 
   resetForm(): void {
@@ -42,7 +43,7 @@ export class NoteFormComponent {
       title: '',
       content: '',
       isArchived: false,
-      category: [],
+      category: this.categories[0],
     };
   }
 }

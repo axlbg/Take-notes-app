@@ -10,18 +10,25 @@ import { Note, NoteService } from '../../services/note.service';
 })
 export class NoteDisplayComponent {
   @Input() note!: Note;
+  display: boolean = true;
 
   constructor(private noteService: NoteService) {}
 
-  archiveNote(id: number): void {
+  changeArchiveStatusNote(id: number): void {
     this.noteService.archiveNote(id).subscribe(() => {
-      console.log('Archived');
+      this.noteService.refreshNotes(!this.note.isArchived);
     });
+    this.note.id = -1; // hide component
   }
 
   deleteNote(id: number): void {
     this.noteService.deleteNote(id).subscribe(() => {
-      console.log('Deleted');
+      this.noteService.refreshNotes(!this.note.isArchived);
     });
+    this.note.id = -1; // hide component
+  }
+
+  saveNote() {
+    this.note.id = -1; // hide component
   }
 }

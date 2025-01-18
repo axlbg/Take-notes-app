@@ -1,3 +1,4 @@
+@if (note.id !== -1) {
 <div class="note-display">
   <h4 class="note-title">{{ note.title }}</h4>
 
@@ -7,7 +8,7 @@
 
   <div class="category-actions">
     <span class="category-label">Category:</span>
-    <span class="category-value">{{ note.category }}</span>
+    <span class="category-value">{{ note.category!.name }}</span>
     <div class="action-buttons">
       <button class="btn btn-secondary">Add</button>
       <button class="btn btn-secondary">Remove</button>
@@ -15,8 +16,8 @@
   </div>
 
   <div class="footer-buttons">
-    <button class="btn btn-primary">Save</button>
-    <button class="btn btn-warning" (click)="archiveNote(note.id!)">
+    <button class="btn btn-primary" (click)="saveNote()">Save</button>
+    <button class="btn btn-warning" (click)="changeArchiveStatusNote(note.id!)">
       {{ note.isArchived ? "Unarchive" : "Archive" }}
     </button>
     <button class="btn btn-danger" (click)="deleteNote(note.id!)">
@@ -24,3 +25,4 @@
     </button>
   </div>
 </div>
+}
