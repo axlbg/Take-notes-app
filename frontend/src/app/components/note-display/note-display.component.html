@@ -1,0 +1,26 @@
+<div class="note-display">
+  <h4 class="note-title">{{ note.title }}</h4>
+
+  <div class="note-content">
+    {{ note.content }}
+  </div>
+
+  <div class="category-actions">
+    <span class="category-label">Category:</span>
+    <span class="category-value">{{ note.category }}</span>
+    <div class="action-buttons">
+      <button class="btn btn-secondary">Add</button>
+      <button class="btn btn-secondary">Remove</button>
+    </div>
+  </div>
+
+  <div class="footer-buttons">
+    <button class="btn btn-primary">Save</button>
+    <button class="btn btn-warning" (click)="archiveNote(note.id!)">
+      {{ note.isArchived ? "Unarchive" : "Archive" }}
+    </button>
+    <button class="btn btn-danger" (click)="deleteNote(note.id!)">
+      Delete
+    </button>
+  </div>
+</div>

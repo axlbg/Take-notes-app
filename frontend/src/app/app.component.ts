@@ -1,13 +1,20 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NoteFormComponent } from './components/note-form/note-form.component';
+import { NoteListComponent } from './components/note-list/note-list.component';
+import { NoteDisplayComponent } from './components/note-display/note-display.component';
+import { Note } from './services/note.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [NoteFormComponent, NoteListComponent, NoteDisplayComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'frontend';
+  note!: Note;
+
+  onNoteSelected(note: Note) {
+    this.note = note;
+  }
 }

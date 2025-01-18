@@ -1,27 +1,39 @@
 <div>
-  <h2>Create/Edit Note</h2>
-  <form (ngSubmit)="saveNote()">
-    <div>
-      <label for="title">Title:</label>
-      <input id="title" [(ngModel)]="note.title" name="title" required />
+  <form class="note-form" (ngSubmit)="saveNote()">
+    <h4 class="note-title">New Note</h4>
+    <div class="form-group">
+      <label>Title</label>
+      <input
+        id="title"
+        [(ngModel)]="note.title"
+        name="title"
+        required
+        type="text"
+        placeholder="Enter note title..."
+      />
     </div>
-    <div>
-      <label for="content">Content:</label>
+
+    <div class="form-group">
+      <label>Content</label>
       <textarea
         id="content"
         [(ngModel)]="note.content"
         name="content"
         required
+        placeholder="Write your note content..."
       ></textarea>
     </div>
-    <div>
-      <label for="category">Category:</label>
-      <select id="category" [(ngModel)]="note.category" name="category">
-        <option *ngFor="let category of categories" [ngValue]="category">
-          {{ category.name }}
-        </option>
-      </select>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Category</label>
+        <select id="category" [(ngModel)]="note.category" name="category">
+          <option *ngFor="let category of categories" [ngValue]="category">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
     </div>
-    <button type="submit">Save</button>
   </form>
 </div>

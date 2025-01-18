@@ -1,18 +1,27 @@
-<div class="container mt-4">
-  <h1>Notes</h1>
-  <div *ngFor="let note of notes" class="card mb-3">
-    <div class="card-body">
-      <h5 class="card-title">{{ note.title }}</h5>
-      <p class="card-text">{{ note.content }}</p>
-      <button
-        class="btn btn-primary btn-sm me-2"
-        (click)="archiveNote(note.id!)"
-      >
-        {{ note.archived ? "Unarchive" : "Archive" }}
-      </button>
-      <button class="btn btn-danger btn-sm" (click)="deleteNote(note.id!)">
-        Delete
-      </button>
-    </div>
+<div class="sidebar">
+  <h3>Notes</h3>
+  <div class="tabs">
+    <button
+      class="tab"
+      (click)="this.archivedSelected = !this.archivedSelected; fetchNotes()"
+      [ngClass]="{ selected: !archivedSelected }"
+    >
+      Active
+    </button>
+    <button
+      class="tab"
+      (click)="
+        this.archivedSelected = !this.archivedSelected; fetchArchivedNotes()
+      "
+      [ngClass]="{ selected: archivedSelected }"
+    >
+      Archived
+    </button>
   </div>
+  <div class="filter-box">
+    <input type="text" placeholder="Filter by category..." />
+  </div>
+  <ul class="notes-list">
+    <li *ngFor="let note of notes" (click)="outNote(note)">{{ note.title }}</li>
+  </ul>
 </div>

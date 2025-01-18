@@ -12,7 +12,7 @@ import { Category, CategoryService } from '../../services/category.service';
   styleUrl: './note-form.component.css',
 })
 export class NoteFormComponent {
-  note: Note = { title: '', content: '', archived: false, category: [] };
+  note: Note = { title: '', content: '', isArchived: false, category: [] };
 
   categories: Category[] = [];
 
@@ -41,7 +41,7 @@ export class NoteFormComponent {
     this.note = {
       title: '',
       content: '',
-      archived: false,
+      isArchived: false,
       category: [],
     };
   }

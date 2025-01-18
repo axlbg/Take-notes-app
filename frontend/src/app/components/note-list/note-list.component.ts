@@ -1,23 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Note, NoteService } from '../../services/note.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Category, CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-note-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgClass],
   templateUrl: './note-list.component.html',
   styleUrl: './note-list.component.css',
 })
 export class NoteListComponent {
   notes: Note[] = [];
+  @Output() noteSelected = new EventEmitter<Note>();
+
+  archivedSelected: boolean = false;
 
   constructor(
     private noteService: NoteService,
     private categoryService: CategoryService
   ) {
-    this.fetchNotes();
+    this.noteService.getActiveNotes().subscribe((data) => {
+      this.notes = data;
+    });
+  }
+
+  outNote(note: Note) {
+    this.noteSelected.emit(note);
   }
 
   fetchNotes(): void {
@@ -26,36 +35,9 @@ export class NoteListComponent {
     });
   }
 
-  archiveNote(id: number): void {
-    this.noteService.archiveNote(id).subscribe(() => {
-      this.fetchNotes();
+  fetchArchivedNotes(): void {
+    this.noteService.getArchivedNotes().subscribe((data) => {
+      this.notes = data;
     });
-  }
-
-  deleteNote(id: number): void {
-    this.noteService.deleteNote(id).subscribe(() => {
-      this.fetchNotes();
-    });
-  }
-
-  creamela() {
-    let note: Note[] = [
-      {
-        title: 'My PRUEBA note3',
-        content: 'This is the content of my PRUEBA3',
-        archived: false,
-      },
-    ];
-    let c: Category = { name: 'Mi Propia33', notes: note };
-
-    this.categoryService.createCategory(c).subscribe({
-      next: (response) => {
-        console.log('Categoría creada con éxito:', response);
-      },
-      error: (err) => {
-        console.error('Error al crear la categoría:', err);
-      },
-    });
-    console.log('well done 11');
   }
 }
