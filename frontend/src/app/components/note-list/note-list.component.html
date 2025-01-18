@@ -18,6 +18,21 @@
       Archived
     </button>
   </div>
+
+  <div class="filter-box">
+    <select
+      id="category"
+      [(ngModel)]="categoryFilter"
+      name="category"
+      (click)="filterByCategory()"
+    >
+      <option>Filter by category...</option>
+      <option *ngFor="let category of categories" [ngValue]="category.name">
+        {{ category.name }}
+      </option>
+    </select>
+  </div>
+
   <div class="filter-box">
     <input
       type="text"

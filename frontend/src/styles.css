@@ -85,7 +85,8 @@ body {
   background-color: #1a1a1a;
 }
 
-.filter-box input {
+.filter-box input,
+.filter-box select {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #333;
