@@ -1,24 +1,26 @@
-<div class="header">
-  <h2>Take notes!</h2>
-</div>
-<div class="container">
-  <div class="sidebar">
-    <div class="bar-buttons">
-      <button class="btn btn-dark" (click)="showNewNote = true">
-        New Note
-      </button>
-      <button class="btn btn-dark" (click)="showNewNote = false">
-        New Category
-      </button>
-    </div>
-    <app-note-list (noteSelected)="onNoteSelected($event)"></app-note-list>
+<div class="body">
+  <div class="header">
+    <h2>Take notes!</h2>
   </div>
+  <div class="container1">
+    <div class="sidebar">
+      <div class="bar-buttons">
+        <button class="btn btn-dark" (click)="showNewNote = true">
+          New Note
+        </button>
+        <button class="btn btn-dark" (click)="showNewNote = false">
+          New Category
+        </button>
+      </div>
+      <app-note-list (noteSelected)="onNoteSelected($event)"></app-note-list>
+    </div>
 
-  <div class="main-content">
-    @if (showNewNote) {<app-note-form></app-note-form>} @else {
-    <app-category-form></app-category-form> } @if (note) {<app-note-display
-      [note]="note"
-    ></app-note-display
-    >}
+    <div class="main-content">
+      @if (showNewNote) {<app-note-form></app-note-form>} @else {
+      <app-category-form></app-category-form> } @if (note) {<app-note-display
+        [note]="note"
+      ></app-note-display
+      >}
+    </div>
   </div>
 </div>

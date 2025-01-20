@@ -33,7 +33,7 @@ body {
   font-weight: 600;
 }
 
-.container {
+.container1 {
   display: grid;
   grid-template-columns: 300px 1fr;
   min-height: calc(100vh - 4rem);
@@ -109,6 +109,12 @@ body {
 .notes-list {
   list-style: none;
   padding: 1rem;
+
+  overflow-y: scroll;
+  height: 50vh;
+
+  scrollbar-color: #8888 #222;
+  scrollbar-width: thin;
 }
 
 .notes-list li {
@@ -204,6 +210,7 @@ textarea {
 }
 
 .note-content {
+  display: flex;
   padding: 1rem;
   background-color: white;
   border: 1px solid var(--border-color);

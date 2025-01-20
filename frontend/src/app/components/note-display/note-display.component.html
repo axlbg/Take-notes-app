@@ -9,14 +9,11 @@
   <div class="category-actions">
     <span class="category-label">Category:</span>
     <span class="category-value">{{ note.category!.name }}</span>
-    <div class="action-buttons">
-      <button class="btn btn-secondary">Add</button>
-      <button class="btn btn-secondary">Remove</button>
-    </div>
   </div>
 
   <div class="footer-buttons">
     <button class="btn btn-primary" (click)="saveNote()">Save</button>
+    <button class="btn btn-secondary">Edit</button>
     <button class="btn btn-warning" (click)="changeArchiveStatusNote(note.id!)">
       {{ note.isArchived ? "Unarchive" : "Archive" }}
     </button>
