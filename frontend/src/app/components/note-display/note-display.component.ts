@@ -30,6 +30,7 @@ export class NoteDisplayComponent {
   changeArchiveStatusNote(id: number): void {
     this.noteService.archiveNote(id).subscribe(() => {
       this.noteService.refreshNotes(!this.note.isArchived);
+      this.note.isArchived = !this.note.isArchived;
     });
   }
 
