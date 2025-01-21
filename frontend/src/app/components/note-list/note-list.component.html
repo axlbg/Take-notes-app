@@ -26,7 +26,7 @@
       name="category"
       (click)="filterByCategory()"
     >
-      <option>Filter by category...</option>
+      <option>{{ defaultMessageFilter }}</option>
       <option *ngFor="let category of categories" [ngValue]="category.name">
         {{ category.name }}
       </option>

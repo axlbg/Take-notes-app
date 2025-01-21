@@ -19,7 +19,7 @@ export class NoteListComponent {
   archivedSelected: boolean = false;
   term: string = '';
 
-  defaultMessageFilter: string = 'Filter by category...';
+  defaultMessageFilter: string = 'All categories...';
   categoryFilter: string = this.defaultMessageFilter;
   categories: Category[] = [];
 

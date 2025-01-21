@@ -41,8 +41,8 @@ export class NotesService {
     return this.notesRepository.save(note);
   }
 
-  update(id: number, note: Note): Promise<Note> {
-    return this.notesRepository.save({ ...note, id });
+  async update(id: number, note: Note): Promise<void> {
+    await this.notesRepository.update(id, note);
   }
 
   async delete(id: number): Promise<void> {

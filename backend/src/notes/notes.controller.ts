@@ -31,7 +31,7 @@ export class NotesController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() note: Note): Promise<Note> {
+  update(@Param('id') id: number, @Body() note: Note): Promise<void> {
     return this.notesService.update(id, note);
   }
 

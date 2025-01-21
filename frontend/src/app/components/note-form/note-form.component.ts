@@ -33,7 +33,6 @@ export class NoteFormComponent {
 
   saveNote(): void {
     this.noteService.createNote(this.note).subscribe(() => {
-      console.log(this.note);
       this.resetForm();
     });
   }
