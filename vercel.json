@@ -8,13 +8,16 @@
     },
     {
       "src": "backend/package.json",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "distDir": "dist"
+      }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/src/main.ts"
+      "dest": "/backend/dist/main.js"
     }
   ]
 }
