@@ -6,7 +6,7 @@ async function bootstrap() {
 
   // Configurar CORS
   app.enableCors({
-    origin: 'https://take-notes-app-ten.vercel.app/', // Permite solicitudes desde el frontend
+    origin: 'https://take-notes-app-ten.vercel.app', // Permite solicitudes desde el frontend
     methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type',
   });
