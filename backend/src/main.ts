@@ -1,19 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import * as express from 'express';
-
-const server = express();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
-  await app.init();
+  const app = await NestFactory.create(AppModule);
 
   // Configurar CORS
   app.enableCors({
-    origin: 'https://take-notes-app-ten.vercel.app/', // CORS
-    methods: 'GET,PATCH,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
+    origin: 'http://localhost:4200', // Permite solicitudes desde el frontend
+    methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type',
   });
 
   // Configuración de puerto
