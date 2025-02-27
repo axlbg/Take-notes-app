@@ -14,7 +14,7 @@ PostgreSQL
 
 _________________________________
 
-
+🚀 Live version available here: https://take-notes-app-ten.vercel.app/
 
 ![Take notes](https://github.com/user-attachments/assets/b6f85607-a31a-42d7-8da1-9a6a631c054c)
 
